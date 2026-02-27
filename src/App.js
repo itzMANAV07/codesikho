@@ -4,6 +4,7 @@ import { languages, quickQuestions } from './languages';
 import { getAIResponse } from './aiService';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+/* eslint-disable no-unused-vars */
 
 /* ─── syntax highlighter ─────────────────────────────────── */
 function highlight(code, lang) {
@@ -65,7 +66,6 @@ const CheckIcon = () => (<svg width="13" height="13" viewBox="0 0 24 24" fill="n
 const SendIcon = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>);
 const PlusIcon = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>);
 const MenuIcon = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>);
-const BotIcon = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M12 11V7"/><circle cx="12" cy="5" r="2"/><line x1="8" y1="15" x2="8" y2="17"/><line x1="16" y1="15" x2="16" y2="17"/><path d="M7 11V9a5 5 0 0 1 10 0v2"/></svg>);
 /* ─── Custom Logo (chat bubble + two eyes) ───────────────── */
 const Logo = ({ size = 32 }) => (
   <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -127,16 +127,6 @@ const MicIcon = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="non
 const StopIcon = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>);
 
 const ts = () => new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
-
-const WELCOME = {
-  en: "Hello! I'm **CodeSikho AI** — your personal coding tutor built for Indian students.\n\nAsk me about any **error**, **concept**, or **programming topic** and I'll explain it clearly with examples!",
-  hi: "नमस्ते! मैं **CodeSikho AI** हूं — भारतीय छात्रों के लिए बना आपका personal coding tutor।\n\nकिसी भी **error**, **concept**, या **programming topic** के बारे में पूछें!",
-  ta: "வணக்கம்! நான் **CodeSikho AI** — இந்திய மாணவர்களுக்காக உருவாக்கப்பட்ட coding tutor.\n\nஎந்த **error**, **concept** பற்றியும் கேளுங்கள்!",
-  te: "నమస్కారం! నేను **CodeSikho AI** — భారతీయ విద్యార్థుల కోసం తయారైన coding tutor.\n\nఏ **error**, **concept** గురించైనా అడగండి!",
-  bn: "নমস্কার! আমি **CodeSikho AI** — ভারতীয় ছাত্রদের জন্য তৈরি coding tutor।\n\nযেকোনো **error** বা **concept** সম্পর্কে জিজ্ঞাসা করুন!",
-  kn: "ನಮಸ್ಕಾರ! ನಾನು **CodeSikho AI** — ಭಾರತೀಯ ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ತಯಾರಾದ coding tutor.\n\nಯಾವ **error**, **concept** ಬಗ್ಗೆಯಾದರೂ ಕೇಳಿ!",
-  ml: "നമസ്കാരം! ഞാൻ **CodeSikho AI** — ഇന്ത്യൻ വിദ്യാർത്ഥികൾക്കായി നിർമ്മിച്ച coding tutor.\n\nഏത് **error**, **concept** സംബന്ധിച്ചും ചോദിക്കൂ!",
-};
 
 /* helper — get first user message as title */
 const getTitle = (messages) => {
