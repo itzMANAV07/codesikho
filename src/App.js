@@ -6,7 +6,6 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Amplify } from 'aws-amplify';
 import { Authenticator } from '@aws-amplify/ui-react';
-import { signOut as amplifySignOut } from 'aws-amplify/auth';
 import '@aws-amplify/ui-react/styles.css';
 import awsconfig from './aws-exports';
 /* eslint-disable no-unused-vars */
