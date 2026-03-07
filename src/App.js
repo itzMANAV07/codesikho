@@ -4,7 +4,14 @@ import { languages, quickQuestions } from './languages';
 import { getAIResponse } from './aiService';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { Amplify } from 'aws-amplify';
+import { Authenticator } from '@aws-amplify/ui-react';
+import { signOut as amplifySignOut } from 'aws-amplify/auth';
+import '@aws-amplify/ui-react/styles.css';
+import awsconfig from './aws-exports';
 /* eslint-disable no-unused-vars */
+
+Amplify.configure(awsconfig);
 
 /* ─── syntax highlighter ─────────────────────────────────── */
 function highlight(code, lang) {
@@ -75,6 +82,7 @@ const SunIcon     = () => (<svg width="15" height="15" viewBox="0 0 24 24" fill=
 const MoonIcon    = () => (<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>);
 const MicIcon     = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M19 10a7 7 0 0 1-14 0"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>);
 const StopIcon    = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>);
+const LogoutIcon  = () => (<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>);
 
 /* ─── Custom Logo ─────────────────────────────────────────── */
 const Logo = ({ size = 32 }) => (
@@ -120,13 +128,12 @@ const getTitle = (messages) => {
   return first.text.slice(0, 36) + (first.text.length > 36 ? '…' : '');
 };
 
-// Max chars allowed in textarea
 const MAX_INPUT = 500;
 
 /* ═══════════════════════════════════════════════════════════
-   APP
+   INNER APP (receives user from Authenticator)
 ═══════════════════════════════════════════════════════════ */
-export default function App() {
+function InnerApp({ user, signOut }) {
   const [msgs, setMsgs]               = useState([]);
   const [input, setInput]             = useState('');
   const [loading, setLoading]         = useState(false);
@@ -145,9 +152,13 @@ export default function App() {
   const endRef = useRef(null);
   const taRef  = useRef(null);
 
+  // Get user display info from Cognito
+  const userEmail = user?.signInDetails?.loginId || user?.username || 'student@codesikho.com';
+  const userName  = user?.attributes?.name || userEmail.split('@')[0] || 'Student';
+  const userAvatar = userName[0]?.toUpperCase() || 'S';
+
   useEffect(() => { endRef.current?.scrollIntoView({behavior:'smooth'}); }, [msgs, loading]);
 
-  // Close lang dropdown when clicking outside
   useEffect(() => {
     if (!langOpen) return;
     const close = () => setLangOpen(false);
@@ -303,7 +314,6 @@ export default function App() {
                 <span className="lang-label-text">Response Language</span>
               </div>
 
-              {/* Stop click propagation so the outside-click handler doesn't immediately close it */}
               <div className="lang-selector" onClick={e => { e.stopPropagation(); setLangOpen(p => !p); }}>
                 <GlobeIcon/>
                 <span>{curLang.flag} {curLang.nativeName}</span>
@@ -323,15 +333,21 @@ export default function App() {
                 </div>
               )}
 
+              {/* ── User pill with real Cognito user info ── */}
               <div className="user-pill">
-                <div className="user-av">S</div>
+                <div className="user-av">{userAvatar}</div>
                 <div>
-                  <p className="user-name">Student</p>
-                  <p className="user-plan">Free Plan</p>
+                  <p className="user-name">{userName}</p>
+                  <p className="user-plan">{userEmail}</p>
                 </div>
-                <button className="theme-toggle-sm" onClick={() => setDark(p => !p)} title="Toggle theme">
-                  {dark ? <SunIcon/> : <MoonIcon/>}
-                </button>
+                <div style={{ display: 'flex', gap: '4px' }}>
+                  <button className="theme-toggle-sm" onClick={() => setDark(p => !p)} title="Toggle theme">
+                    {dark ? <SunIcon/> : <MoonIcon/>}
+                  </button>
+                  <button className="theme-toggle-sm" onClick={signOut} title="Sign out">
+                    <LogoutIcon/>
+                  </button>
+                </div>
               </div>
             </div>
           </>
@@ -341,7 +357,7 @@ export default function App() {
       {/* ══ MAIN ══ */}
       <main className="main">
 
-        {/* Topbar — only visible when chat has messages */}
+        {/* Topbar */}
         <header className={`topbar ${msgs.length > 0 ? 'tb-visible' : 'tb-hidden'}`}>
           {!sidebar && (
             <button className="icon-btn" onClick={() => setSidebar(true)}><MenuIcon/></button>
@@ -502,5 +518,18 @@ export default function App() {
         )}
       </main>
     </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ROOT APP — wrapped with Authenticator
+═══════════════════════════════════════════════════════════ */
+export default function App() {
+  return (
+    <Authenticator>
+      {({ signOut, user }) => (
+        <InnerApp user={user} signOut={signOut} />
+      )}
+    </Authenticator>
   );
 }
