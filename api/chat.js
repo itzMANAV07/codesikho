@@ -75,27 +75,30 @@ async function translateText(text, targetLang) {
 
 async function callBedrock(message, language, history) {
   const systemPrompt = systemPrompts[language] || systemPrompts.en;
-  const historyText = history.slice(-6)
-    .map(h => `${h.role === 'user' ? 'Human' : 'Assistant'}: ${h.content}`)
-    .join('\n');
 
-  const fullPrompt = `${systemPrompt}\n\n${historyText}\n\nHuman: ${message}\n\nAssistant:`;
+  const messages = [
+    ...history.slice(-6).map(h => ({
+      role: h.role === 'user' ? 'user' : 'assistant',
+      content: h.content
+    })),
+    { role: 'user', content: message }
+  ];
 
   const command = new InvokeModelCommand({
     modelId: 'anthropic.claude-3-haiku-20240307-v1:0',
     contentType: 'application/json',
     accept: 'application/json',
     body: JSON.stringify({
-      prompt: fullPrompt,
-      max_tokens_to_sample: 300,
-      temperature: 0.7,
-      stop_sequences: ['\n\nHuman:'],
+      anthropic_version: 'bedrock-2023-05-31',
+      max_tokens: 300,
+      system: systemPrompt,
+      messages: messages
     }),
   });
 
   const response = await bedrockClient.send(command);
   const body = JSON.parse(new TextDecoder().decode(response.body));
-  return body.completion?.trim() || 'Sorry, I could not generate a response.';
+  return body.content[0].text?.trim() || 'Sorry, I could not generate a response.';
 }
 
 module.exports = async (req, res) => {
