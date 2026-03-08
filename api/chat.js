@@ -4,7 +4,7 @@ const { DynamoDBDocumentClient, PutCommand } = require('@aws-sdk/lib-dynamodb');
 const { TranslateClient, TranslateTextCommand } = require('@aws-sdk/client-translate');
 
 const bedrockClient = new BedrockRuntimeClient({
-  region: 'us-east-1',
+  region: 'ap-south-1',
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -79,26 +79,28 @@ async function callBedrock(message, language, history) {
   const messages = [
     ...history.slice(-6).map(h => ({
       role: h.role === 'user' ? 'user' : 'assistant',
-      content: h.content
+      content: [{ text: h.content }]
     })),
-    { role: 'user', content: message }
+    { role: 'user', content: [{ text: message }] }
   ];
 
   const command = new InvokeModelCommand({
-    modelId: 'anthropic.claude-3-haiku-20240307-v1:0',
+    modelId: 'amazon.nova-lite-v1:0',
     contentType: 'application/json',
     accept: 'application/json',
     body: JSON.stringify({
-      anthropic_version: 'bedrock-2023-05-31',
-      max_tokens: 300,
-      system: systemPrompt,
-      messages: messages
+      messages: messages,
+      system: [{ text: systemPrompt }],
+      inferenceConfig: {
+        maxTokens: 300,
+        temperature: 0.7
+      }
     }),
   });
 
   const response = await bedrockClient.send(command);
   const body = JSON.parse(new TextDecoder().decode(response.body));
-  return body.content[0].text?.trim() || 'Sorry, I could not generate a response.';
+  return body.output.message.content[0].text?.trim() || 'Sorry, I could not generate a response.';
 }
 
 module.exports = async (req, res) => {
@@ -113,15 +115,12 @@ module.exports = async (req, res) => {
   if (!message) return res.status(400).json({ error: 'Message required' });
 
   try {
-    // 1. Call AWS Bedrock
-    let aiResponse = await callBedrock(message, 'en', history);
+    let aiResponse = await callBedrock(message, language, history);
 
-    // 2. Translate with Amazon Translate if needed
     if (language !== 'en') {
       aiResponse = await translateText(aiResponse, language);
     }
 
-    // 3. Save to DynamoDB
     await saveChatMessage(userId, message, aiResponse, language);
 
     res.status(200).json({ text: aiResponse, success: true });
