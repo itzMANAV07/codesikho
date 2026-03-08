@@ -82,7 +82,7 @@ async function callBedrock(message, language, history) {
   const fullPrompt = `${systemPrompt}\n\n${historyText}\n\nHuman: ${message}\n\nAssistant:`;
 
   const command = new InvokeModelCommand({
-    modelId: 'anthropic.claude-instant-v1',
+    modelId: 'anthropic.claude-3-haiku-20240307-v1:0',
     contentType: 'application/json',
     accept: 'application/json',
     body: JSON.stringify({
