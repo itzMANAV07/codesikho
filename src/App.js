@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 /* eslint-disable no-unused-vars */
 
+/* ─── syntax highlighter ─────────────────────────────────── */
 function highlight(code, lang) {
   const kw = {
     python: ['def','class','import','from','return','if','else','elif','for','while','in','not','and','or','True','False','None','try','except','with','as','lambda','pass','break','continue','print','len','range','self','super','yield'],
@@ -19,6 +20,7 @@ function highlight(code, lang) {
   return s;
 }
 
+/* ─── CodeBlock ──────────────────────────────────────────── */
 function CodeBlock({ code, lang }) {
   const [copied, setCopied] = useState(false);
   const copy = () => { navigator.clipboard.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 2000); };
@@ -36,6 +38,7 @@ function CodeBlock({ code, lang }) {
   );
 }
 
+/* ─── Markdown renderer ──────────────────────────────────── */
 function Prose({ text, isUser }) {
   const blocks = [];
   const re = /```(\w*)\n?([\s\S]*?)```/g;
@@ -57,6 +60,7 @@ function Prose({ text, isUser }) {
   return <div className={`prose${isUser ? ' prose-user' : ''}`}>{blocks}</div>;
 }
 
+/* ─── Icons ──────────────────────────────────────────────── */
 const CopyIcon    = () => (<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>);
 const CheckIcon   = () => (<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>);
 const SendIcon    = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>);
@@ -71,9 +75,8 @@ const SunIcon     = () => (<svg width="15" height="15" viewBox="0 0 24 24" fill=
 const MoonIcon    = () => (<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>);
 const MicIcon     = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M19 10a7 7 0 0 1-14 0"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>);
 const StopIcon    = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>);
-const LogoutIcon  = () => (<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>);
-const SpeakIcon   = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>);
 
+/* ─── Custom Logo ─────────────────────────────────────────── */
 const Logo = ({ size = 32 }) => (
   <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -83,7 +86,8 @@ const Logo = ({ size = 32 }) => (
         <stop offset="100%" stopColor="#3b82f6"/>
       </linearGradient>
     </defs>
-    <path d="M20 15 Q20 8 27 8 L73 8 Q80 8 80 15 L80 58 Q80 65 73 65 L52 65 L38 80 L38 65 L27 65 Q20 65 20 58 Z" stroke="url(#logoGrad)" strokeWidth="5.5" strokeLinejoin="round" fill="none"/>
+    <path d="M20 15 Q20 8 27 8 L73 8 Q80 8 80 15 L80 58 Q80 65 73 65 L52 65 L38 80 L38 65 L27 65 Q20 65 20 58 Z"
+      stroke="url(#logoGrad)" strokeWidth="5.5" strokeLinejoin="round" fill="none"/>
     <circle cx="50" cy="37" r="16" fill="rgba(10,20,50,0.55)"/>
     <circle cx="43" cy="37" r="5.5" fill="#4ade80"/>
     <circle cx="57" cy="37" r="5.5" fill="#3b82f6"/>
@@ -99,65 +103,51 @@ const LogoAvatar = ({ size = 28 }) => (
         <stop offset="100%" stopColor="#3b82f6"/>
       </linearGradient>
     </defs>
-    <path d="M20 15 Q20 8 27 8 L73 8 Q80 8 80 15 L80 58 Q80 65 73 65 L52 65 L38 80 L38 65 L27 65 Q20 65 20 58 Z" stroke="url(#lgA)" strokeWidth="5.5" strokeLinejoin="round" fill="none"/>
+    <path d="M20 15 Q20 8 27 8 L73 8 Q80 8 80 15 L80 58 Q80 65 73 65 L52 65 L38 80 L38 65 L27 65 Q20 65 20 58 Z"
+      stroke="url(#lgA)" strokeWidth="5.5" strokeLinejoin="round" fill="none"/>
     <circle cx="50" cy="37" r="16" fill="rgba(10,20,50,0.55)"/>
     <circle cx="43" cy="37" r="5.5" fill="#4ade80"/>
     <circle cx="57" cy="37" r="5.5" fill="#3b82f6"/>
   </svg>
 );
 
+/* ─── Helpers ────────────────────────────────────────────── */
 const ts = () => new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
+
 const getTitle = (messages) => {
   const first = messages.find(m => m.role === 'user');
   if (!first) return 'New chat';
   return first.text.slice(0, 36) + (first.text.length > 36 ? '…' : '');
 };
+
+// Max chars allowed in textarea
 const MAX_INPUT = 500;
 
-async function speakWithPolly(text, language) {
-  try {
-    const response = await fetch('/api/speak', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text, language }),
-    });
-    if (!response.ok) throw new Error('Polly failed');
-    const audioBlob = await response.blob();
-    const audioUrl = URL.createObjectURL(audioBlob);
-    new Audio(audioUrl).play();
-  } catch (err) {
-    console.error('Polly error:', err);
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = { hi:'hi-IN', ta:'ta-IN', te:'te-IN', bn:'bn-IN', kn:'kn-IN', ml:'ml-IN' }[language] || 'en-IN';
-      window.speechSynthesis.speak(utterance);
-    }
-  }
-}
+/* ═══════════════════════════════════════════════════════════
+   APP
+═══════════════════════════════════════════════════════════ */
+export default function App() {
+  const [msgs, setMsgs]               = useState([]);
+  const [input, setInput]             = useState('');
+  const [loading, setLoading]         = useState(false);
+  const [lang, setLang]               = useState('en');
+  const [history, setHistory]         = useState([]);
+  const [sidebar, setSidebar]         = useState(true);
+  const [langOpen, setLangOpen]       = useState(false);
+  const [dark, setDark]               = useState(true);
+  const [listening, setListening]     = useState(false);
+  const [error, setError]             = useState('');
+  const recognitionRef                = useRef(null);
 
-function InnerApp({ user, signOut }) {
-  const [msgs, setMsgs]                 = useState([]);
-  const [input, setInput]               = useState('');
-  const [loading, setLoading]           = useState(false);
-  const [lang, setLang]                 = useState('en');
-  const [history, setHistory]           = useState([]);
-  const [sidebar, setSidebar]           = useState(true);
-  const [langOpen, setLangOpen]         = useState(false);
-  const [dark, setDark]                 = useState(true);
-  const [listening, setListening]       = useState(false);
-  const [error, setError]               = useState('');
-  const [speakingId, setSpeakingId]     = useState(null);
-  const [chats, setChats]               = useState([]);
+  const [chats, setChats]             = useState([]);
   const [activeChatId, setActiveChatId] = useState(null);
-  const recognitionRef                  = useRef(null);
-  const endRef                          = useRef(null);
-  const taRef                           = useRef(null);
 
-  const userEmail  = user?.signInDetails?.loginId || user?.username || 'student@codesikho.com';
-  const userName   = user?.attributes?.name || userEmail.split('@')[0] || 'Student';
-  const userAvatar = userName[0]?.toUpperCase() || 'S';
+  const endRef = useRef(null);
+  const taRef  = useRef(null);
 
   useEffect(() => { endRef.current?.scrollIntoView({behavior:'smooth'}); }, [msgs, loading]);
+
+  // Close lang dropdown when clicking outside
   useEffect(() => {
     if (!langOpen) return;
     const close = () => setLangOpen(false);
@@ -170,10 +160,13 @@ function InnerApp({ user, signOut }) {
     if (t) { t.style.height = 'auto'; t.style.height = Math.min(t.scrollHeight, 160) + 'px'; }
   };
 
+  /* ── Voice input ── */
   const toggleVoice = () => {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) { alert('Voice input requires Chrome browser.'); return; }
+
     if (listening) { recognitionRef.current?.stop(); setListening(false); return; }
+
     const rec = new SR();
     rec.lang = { hi:'hi-IN', ta:'ta-IN', te:'te-IN', bn:'bn-IN', kn:'kn-IN', ml:'ml-IN' }[lang] || 'en-IN';
     rec.continuous = false;
@@ -190,12 +183,7 @@ function InnerApp({ user, signOut }) {
     rec.start();
   };
 
-  const handleSpeak = async (msgId, text) => {
-    setSpeakingId(msgId);
-    await speakWithPolly(text, lang);
-    setTimeout(() => setSpeakingId(null), 3000);
-  };
-
+  /* ── Chat management ── */
   const newChat = () => {
     if (msgs.length > 0) saveCurrentChat();
     setMsgs([]); setHistory([]); setActiveChatId(null);
@@ -228,20 +216,24 @@ function InnerApp({ user, signOut }) {
     if (activeChatId === id) { setMsgs([]); setHistory([]); setActiveChatId(null); }
   };
 
+  /* ── Send message ── */
   const send = async () => {
     if (!input.trim() || loading) return;
     setError('');
+
     const userMsg  = { id: Date.now(), role:'user', text: input.trim(), time: ts() };
     const newMsgs  = [...msgs, userMsg];
     const newHist  = [...history, { role:'user', content: input.trim() }];
     const txt      = input.trim();
+
     setMsgs(newMsgs);
     setInput('');
     if (taRef.current) taRef.current.style.height = 'auto';
     setLoading(true);
+
     try {
       const res = await getAIResponse(txt, lang, history);
-      const aiMsg     = { id: Date.now() + 1, role:'ai', text: res, time: ts() };
+      const aiMsg     = { id: Date.now(), role:'ai', text: res, time: ts() };
       const finalMsgs = [...newMsgs, aiMsg];
       const finalHist = [...newHist, { role:'assistant', content: res }];
       setMsgs(finalMsgs);
@@ -249,7 +241,8 @@ function InnerApp({ user, signOut }) {
       saveCurrentChat(finalMsgs, finalHist);
     } catch (err) {
       setError('Could not reach the AI. Check your connection and try again.');
-      setMsgs(p => [...p, { id: Date.now() + 1, role:'ai', text: '⚠️ Something went wrong. Please try again.', time: ts() }]);
+      const errMsg = { id: Date.now(), role:'ai', text: '⚠️ Something went wrong. Please try again.', time: ts() };
+      setMsgs(p => [...p, errMsg]);
     } finally {
       setLoading(false);
     }
@@ -257,6 +250,7 @@ function InnerApp({ user, signOut }) {
 
   const onKey = e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } };
 
+  /* ── Derived ── */
   const curLang   = languages.find(l => l.code === lang) || languages[0];
   const curQs     = quickQuestions[lang] || quickQuestions.en;
   const inputLeft = MAX_INPUT - input.length;
@@ -264,26 +258,37 @@ function InnerApp({ user, signOut }) {
 
   return (
     <div className={`root ${dark ? 'dark' : 'light'}`}>
+
+      {/* ══ SIDEBAR ══ */}
       <aside className={`aside ${sidebar ? 'open' : 'closed'}`}>
         <div className="aside-head">
           <div className="logo-row">
             <div className="logo-gem"><Logo size={28}/></div>
             {sidebar && <span className="logo-name">CodeSikho</span>}
           </div>
-          <button className="icon-btn" onClick={() => setSidebar(p => !p)}><MenuIcon/></button>
+          <button className="icon-btn" onClick={() => setSidebar(p => !p)} title="Toggle sidebar">
+            <MenuIcon/>
+          </button>
         </div>
+
         {sidebar && (
           <>
             <div className="aside-scroll">
-              <button className="new-btn" onClick={newChat}><PlusIcon/> New chat</button>
+              <button className="new-btn" onClick={newChat}>
+                <PlusIcon/> New chat
+              </button>
+
               {chats.length > 0 ? (
                 <>
                   <p className="aside-label">Recent</p>
                   {chats.map(chat => (
-                    <div key={chat.id} className={`hist-item ${activeChatId === chat.id ? 'active' : ''}`} onClick={() => loadChat(chat)}>
+                    <div key={chat.id} className={`hist-item ${activeChatId === chat.id ? 'active' : ''}`}
+                      onClick={() => loadChat(chat)}>
                       <ChatIcon/>
                       <span className="hist-title">{chat.title}</span>
-                      <button className="hist-del" onClick={e => deleteChat(e, chat.id)}><TrashIcon/></button>
+                      <button className="hist-del" onClick={e => deleteChat(e, chat.id)} title="Delete">
+                        <TrashIcon/>
+                      </button>
                     </div>
                   ))}
                 </>
@@ -291,50 +296,56 @@ function InnerApp({ user, signOut }) {
                 <div className="hist-empty"><p>Your conversations will appear here</p></div>
               )}
             </div>
+
             <div className="aside-foot">
               <div className="lang-label-block">
                 <span className="lang-label-icon"><GlobeIcon/></span>
                 <span className="lang-label-text">Response Language</span>
               </div>
+
+              {/* Stop click propagation so the outside-click handler doesn't immediately close it */}
               <div className="lang-selector" onClick={e => { e.stopPropagation(); setLangOpen(p => !p); }}>
                 <GlobeIcon/>
                 <span>{curLang.flag} {curLang.nativeName}</span>
                 <span className={`caret ${langOpen ? 'open' : ''}`}><ChevronIcon/></span>
               </div>
+
               {langOpen && (
                 <div className="lang-menu" onClick={e => e.stopPropagation()}>
                   {languages.map(l => (
                     <button key={l.code} className={`lang-opt ${lang === l.code ? 'sel' : ''}`}
                       onClick={() => { setLang(l.code); setLangOpen(false); }}>
-                      <span>{l.flag}</span><span>{l.nativeName}</span>
-                      {lang === l.code && <span className="lang-check">✔</span>}
+                      <span>{l.flag}</span>
+                      <span>{l.nativeName}</span>
+                      {lang === l.code && <span className="lang-check">✓</span>}
                     </button>
                   ))}
                 </div>
               )}
-              <div style={{margin:'8px 0',padding:'6px 10px',background:'rgba(255,153,0,0.1)',borderRadius:'6px',border:'1px solid rgba(255,153,0,0.3)'}}>
-                <p style={{fontSize:'10px',color:'#ff9900',margin:0,textAlign:'center'}}>⚡ Powered by AWS</p>
-                <p style={{fontSize:'9px',color:'#64748b',margin:'2px 0 0',textAlign:'center'}}>Bedrock · DynamoDB · Translate · Polly</p>
-              </div>
+
               <div className="user-pill">
-                <div className="user-av">{userAvatar}</div>
+                <div className="user-av">S</div>
                 <div>
-                  <p className="user-name">{userName}</p>
-                  <p className="user-plan">{userEmail}</p>
+                  <p className="user-name">Student</p>
+                  <p className="user-plan">Free Plan</p>
                 </div>
-                <div style={{display:'flex',gap:'4px'}}>
-                  <button className="theme-toggle-sm" onClick={() => setDark(p => !p)}>{dark ? <SunIcon/> : <MoonIcon/>}</button>
-                  <button className="theme-toggle-sm" onClick={signOut}><LogoutIcon/></button>
-                </div>
+                <button className="theme-toggle-sm" onClick={() => setDark(p => !p)} title="Toggle theme">
+                  {dark ? <SunIcon/> : <MoonIcon/>}
+                </button>
               </div>
             </div>
           </>
         )}
       </aside>
 
+      {/* ══ MAIN ══ */}
       <main className="main">
+
+        {/* Topbar — only visible when chat has messages */}
         <header className={`topbar ${msgs.length > 0 ? 'tb-visible' : 'tb-hidden'}`}>
-          {!sidebar && <button className="icon-btn" onClick={() => setSidebar(true)}><MenuIcon/></button>}
+          {!sidebar && (
+            <button className="icon-btn" onClick={() => setSidebar(true)}><MenuIcon/></button>
+          )}
           <div className="tb-center">
             <div className="model-chip">
               <Logo size={22}/>
@@ -343,43 +354,62 @@ function InnerApp({ user, signOut }) {
             </div>
           </div>
           <div className="tb-right">
-            <button className="theme-toggle" onClick={() => setDark(p => !p)}>
+            <button className="theme-toggle" onClick={() => setDark(p => !p)} title="Toggle theme">
               <span className={`toggle-track ${dark ? '' : 'light-mode'}`}>
                 <span className="toggle-thumb">{dark ? <MoonIcon/> : <SunIcon/>}</span>
               </span>
             </button>
-            <div className="status-badge"><span className="status-dot"/><span>Online</span></div>
+            <div className="status-badge">
+              <span className="status-dot"/>
+              <span>Online</span>
+            </div>
           </div>
         </header>
 
+        {/* ══ HOME STATE ══ */}
         {msgs.length === 0 && (
           <div className="home">
             <div className="home-body">
               <div className="home-icon"><Logo size={36}/></div>
               <h1 className="home-title">What can I help with?</h1>
-              <p className="home-sub">Ask me about coding errors, concepts, or debugging in {curLang.flag} {curLang.name}</p>
+              <p className="home-sub">
+                Ask me about coding errors, concepts, or debugging in {curLang.flag} {curLang.name}
+              </p>
+
               <div className="composer home-composer">
                 <div className="composer-box">
-                  <textarea ref={taRef} value={input}
+                  <textarea
+                    ref={taRef}
+                    value={input}
                     onChange={e => { setInput(e.target.value.slice(0, MAX_INPUT)); resize(); }}
                     onKeyPress={onKey}
                     placeholder={`Message CodeSikho AI in ${curLang.name}…`}
-                    rows={1} disabled={loading} autoFocus/>
-                  <button className={`mic-btn ${listening ? 'active' : ''}`} onClick={toggleVoice}>
+                    rows={1}
+                    disabled={loading}
+                    autoFocus
+                  />
+                  <button className={`mic-btn ${listening ? 'active' : ''}`} onClick={toggleVoice} title="Voice input">
                     {listening ? <StopIcon/> : <MicIcon/>}
                   </button>
-                  <button className={`send ${input.trim() && !loading ? 'on' : ''}`} onClick={send} disabled={!input.trim() || loading}>
+                  <button className={`send ${input.trim() && !loading ? 'on' : ''}`} onClick={send}
+                    disabled={!input.trim() || loading}>
                     {loading ? <Spinner/> : <SendIcon/>}
                   </button>
                 </div>
                 <div className="composer-footer">
                   <p className="composer-hint">Enter to send · Shift+Enter for new line</p>
-                  {nearLimit && <span className={`char-count ${inputLeft <= 20 ? 'char-warn' : ''}`}>{inputLeft}</span>}
+                  {nearLimit && (
+                    <span className={`char-count ${inputLeft <= 20 ? 'char-warn' : ''}`}>
+                      {inputLeft}
+                    </span>
+                  )}
                 </div>
               </div>
+
               <div className="starter-grid">
                 {curQs.map((q, i) => (
-                  <button key={i} className="starter-card" onClick={() => { setInput(q.slice(0, MAX_INPUT)); taRef.current?.focus(); }}>
+                  <button key={i} className="starter-card"
+                    onClick={() => { setInput(q.slice(0, MAX_INPUT)); taRef.current?.focus(); }}>
                     <span>{q}</span><ChevronIcon/>
                   </button>
                 ))}
@@ -388,30 +418,36 @@ function InnerApp({ user, signOut }) {
           </div>
         )}
 
+        {/* ══ CHAT STATE ══ */}
         {msgs.length > 0 && (
           <>
             <div className="feed">
               {msgs.map((m, idx) => (
-                <div key={m.id} className={`row ${m.role}`} style={{animationDelay:`${Math.min(idx*.04,.2)}s`}}>
-                  {m.role === 'ai' && <div className="av"><div className="av-ai"><LogoAvatar size={24}/></div></div>}
+                <div key={m.id} className={`row ${m.role}`}
+                  style={{ animationDelay:`${Math.min(idx * .04, .2)}s` }}>
+
+                  {m.role === 'ai' && (
+                    <div className="av">
+                      <div className="av-ai"><LogoAvatar size={24}/></div>
+                    </div>
+                  )}
+
                   <div className="bubble-wrap">
                     {m.role === 'ai' && (
                       <div className="bubble-meta">
                         <span className="bubble-who">CodeSikho AI</span>
                         <span className="bubble-time">{m.time}</span>
-                        <button onClick={() => handleSpeak(m.id, m.text)}
-                          style={{background: speakingId===m.id ? 'rgba(34,211,238,0.2)':'transparent',border:'1px solid rgba(34,211,238,0.3)',borderRadius:'4px',padding:'2px 6px',cursor:'pointer',color:'#22d3ee',fontSize:'10px',display:'flex',alignItems:'center',gap:'3px',marginLeft:'6px'}}>
-                          <SpeakIcon/> {speakingId===m.id ? 'Playing…':'Listen'}
-                        </button>
                       </div>
                     )}
                     <div className={`bubble ${m.role}`}>
-                      <Prose text={m.text} isUser={m.role==='user'}/>
-                      {m.role==='user' && <span className="user-time">{m.time}</span>}
+                      <Prose text={m.text} isUser={m.role === 'user'}/>
+                      {m.role === 'user' && <span className="user-time">{m.time}</span>}
                     </div>
                   </div>
                 </div>
               ))}
+
+              {/* Typing indicator */}
               {loading && (
                 <div className="row ai">
                   <div className="av"><div className="av-ai"><LogoAvatar size={24}/></div></div>
@@ -421,26 +457,45 @@ function InnerApp({ user, signOut }) {
                   </div>
                 </div>
               )}
+
               <div ref={endRef}/>
             </div>
-            {error && <div className="error-banner"><span>⚠ {error}</span><button onClick={() => setError('')}>✕</button></div>}
+
+            {/* Error banner */}
+            {error && (
+              <div className="error-banner">
+                <span>⚠ {error}</span>
+                <button onClick={() => setError('')}>✕</button>
+              </div>
+            )}
+
+            {/* Composer */}
             <div className="composer">
               <div className="composer-box">
-                <textarea ref={taRef} value={input}
+                <textarea
+                  ref={taRef}
+                  value={input}
                   onChange={e => { setInput(e.target.value.slice(0, MAX_INPUT)); resize(); }}
                   onKeyPress={onKey}
                   placeholder={`Message CodeSikho AI in ${curLang.name}…`}
-                  rows={1} disabled={loading}/>
-                <button className={`mic-btn ${listening ? 'active' : ''}`} onClick={toggleVoice}>
+                  rows={1}
+                  disabled={loading}
+                />
+                <button className={`mic-btn ${listening ? 'active' : ''}`} onClick={toggleVoice} title="Voice input">
                   {listening ? <StopIcon/> : <MicIcon/>}
                 </button>
-                <button className={`send ${input.trim() && !loading ? 'on' : ''}`} onClick={send} disabled={!input.trim() || loading}>
+                <button className={`send ${input.trim() && !loading ? 'on' : ''}`} onClick={send}
+                  disabled={!input.trim() || loading}>
                   {loading ? <Spinner/> : <SendIcon/>}
                 </button>
               </div>
               <div className="composer-footer">
                 <p className="composer-hint">Enter to send · Shift+Enter for new line · {curLang.flag} {curLang.name}</p>
-                {nearLimit && <span className={`char-count ${inputLeft <= 20 ? 'char-warn' : ''}`}>{inputLeft}</span>}
+                {nearLimit && (
+                  <span className={`char-count ${inputLeft <= 20 ? 'char-warn' : ''}`}>
+                    {inputLeft}
+                  </span>
+                )}
               </div>
             </div>
           </>
@@ -448,12 +503,4 @@ function InnerApp({ user, signOut }) {
       </main>
     </div>
   );
-}
-
-export default function App() {
-  const mockUser = {
-    username: 'student',
-    signInDetails: { loginId: 'student@codesikho.com' }
-  };
-  return <InnerApp user={mockUser} signOut={() => alert('Signed out!')} />;
 }
