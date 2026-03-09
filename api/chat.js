@@ -7,7 +7,7 @@ const { CloudWatchClient, PutMetricDataCommand } = require('@aws-sdk/client-clou
 // ── Groq AI
 const openai = new OpenAI({
   baseURL: 'https://api.groq.com/openai/v1',
-  apiKey: process.env.GROQ_API_KEY,
+  apiKey: process.env.GROQ_API_KEY || 'dummy-key',
 });
 
 // ── DynamoDB
