@@ -1,69 +1,150 @@
-# Getting Started with Create React App
+# 🤖 CodeSikho AI — Multilingual Coding Assistant for Bharat
 
-Live DEMO: https://codesikho-zppi.vercel.app/
-## Available Scripts
+<div align="center">
 
-In the project directory, you can run:
+![CodeSikho Banner](https://img.shields.io/badge/CodeSikho-AI%20Coding%20Assistant-4ade80?style=for-the-badge&logo=react)
+![Made for India](https://img.shields.io/badge/Made%20for-Bharat%20🇮🇳-FF9933?style=for-the-badge)
+![Hackathon](https://img.shields.io/badge/AI%20for%20Bharat-Hackathon%202026-3b82f6?style=for-the-badge)
 
-### `npm start`
+**An AI-powered coding assistant that explains programming concepts in 7 Indian languages.**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+[🌐 Live Demo](https://codesikho-eight.vercel.app) • [📁 Repository](https://github.com/itzMANAV07/codesikho)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+</div>
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🇮🇳 About CodeSikho
 
-### `npm run build`
+**CodeSikho** (कोड सीखो) means *"Learn to Code"* in Hindi. It is a multilingual AI coding assistant built specifically for Indian students who struggle to understand programming concepts in English.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Whether you're a student in a village in Bihar or a college student in Chennai, CodeSikho explains coding errors, concepts, and solutions in **your own language** — making programming education truly accessible across Bharat.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## ✨ Features
 
-### `npm run eject`
+- 🗣️ **7 Indian Languages** — English, हिंदी, தமிழ், తెలుగు, বাংলা, ಕನ್ನಡ, മലയാളം
+- 🎙️ **Voice Input** — Speak your coding question in your language using the mic
+- 💬 **Multi-turn Conversations** — Full chat history with context memory
+- 🌙 **Dark / Light Mode** — Easy on the eyes during late-night coding sessions
+- 📋 **Code Highlighting** — Syntax-highlighted code blocks with one-click copy
+- 📱 **Responsive Design** — Works on mobile, tablet, and desktop
+- ⚡ **Quick Questions** — Pre-built starter questions in every language
+- 🕐 **Chat History** — Save, revisit, and delete past conversations
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🛠️ Tech Stack
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 19, CSS3 |
+| AI Model | Groq API — `llama-3.3-70b-versatile` |
+| Markdown | `react-markdown` + `remark-gfm` |
+| Deployment | Vercel (Serverless Functions) |
+| Voice Input | Web Speech API (browser-native) |
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 📁 Project Structure
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+codesikho/
+├── api/
+│   └── chat.js          # Serverless API — Groq AI integration
+├── src/
+│   ├── App.js           # Main React component & UI
+│   ├── App.css          # All styles (dark/light themes)
+│   ├── aiService.js     # Frontend API call handler
+│   ├── languages.js     # Language config & system prompts
+│   └── index.js         # React entry point
+├── public/
+│   └── index.html
+└── package.json
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 🚀 Getting Started
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Prerequisites
+- Node.js v18+
+- A free [Groq API key](https://console.groq.com)
 
-### Analyzing the Bundle Size
+### Installation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+# 1. Clone the repository
+git clone https://github.com/itzMANAV07/codesikho.git
+cd codesikho
 
-### Making a Progressive Web App
+# 2. Install dependencies
+npm install
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+# 3. Create environment file
+echo "GROQ_API_KEY=your_groq_api_key_here" > .env
 
-### Advanced Configuration
+# 4. Start the development server
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 🌐 Deployment (Vercel)
 
-### `npm run build` fails to minify
+```bash
+# Install Vercel CLI
+npm i -g vercel
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Deploy
+vercel
+
+# Set your environment variable in Vercel dashboard:
+# GROQ_API_KEY = your_groq_api_key
+```
+
+Or simply connect your GitHub repo to [vercel.com](https://vercel.com) for automatic deployments on every push.
+
+---
+
+## 🌍 Supported Languages
+
+| Language | Native Name | Voice Input |
+|----------|------------|-------------|
+| English | English | ✅ en-IN |
+| Hindi | हिंदी | ✅ hi-IN |
+| Tamil | தமிழ் | ✅ ta-IN |
+| Telugu | తెలుగు | ✅ te-IN |
+| Bengali | বাংলা | ✅ bn-IN |
+| Kannada | ಕನ್ನಡ | ✅ kn-IN |
+| Malayalam | മലയാളം | ✅ ml-IN |
+
+---
+
+## 💡 Example Use Cases
+
+- 🐛 **Debug errors** — Paste your error message, get a fix explained in Hindi
+- 📚 **Learn concepts** — "What is a function?" answered in Tamil with examples
+- 🧑‍💻 **Write code** — Ask CodeSikho to write a Python program for you
+- 🔍 **Understand code** — Paste any code snippet and get a line-by-line explanation
+
+---
+
+## 🤝 Built For
+
+This project was built for the **AI for Bharat Hackathon 2026**, with the goal of democratizing coding education for the 500 million+ Indians who are more comfortable in their regional language than in English.
+
+---
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+<div align="center">
+Made with ❤️ for Bharat 🇮🇳
+</div>
