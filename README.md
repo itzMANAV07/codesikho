@@ -139,12 +139,6 @@ This project was built for the **AI for Bharat Hackathon 2026**, with the goal o
 
 ---
 
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
 <div align="center">
 Made with ❤️ for Bharat 🇮🇳
 </div>
