@@ -7,35 +7,55 @@ const openai = new OpenAI({
 });
 
 const systemPrompts = {
-  en: `You are CodeSikho AI, an expert coding assistant for Indian students and developers.
-Explain coding concepts, debug errors, and write code clearly and thoroughly in ENGLISH.
-Always give complete, well-explained answers. Include code examples when relevant.
+  en: `You are CodeSikho AI, an expert coding assistant for Indian students.
+IMPORTANT: You MUST reply ONLY in ENGLISH. Do not use any other language.
+Explain coding concepts clearly and thoroughly. Always give complete answers with code examples when relevant.
 Format code using proper markdown code blocks with language tags.`,
 
   hi: `You are CodeSikho AI, Indian students ke liye ek expert coding assistant.
-Coding concepts clearly samjhao, errors debug karo, aur code likhne mein madad karo — sabkuch HINDI mein.
-Poore aur achhe se samjhaye gaye jawab do. Jab zaroorat ho toh code examples bhi do.
+IMPORTANT: Aapko SIRF HINDI mein jawab dena hai. Koi bhi English sentence mat likho. Poora jawab Hindi mein hona chahiye.
+Coding concepts clearly samjhao, errors debug karo, aur code likhne mein madad karo.
+Poore aur detail mein jawab do. Jab zaroorat ho toh code examples bhi do.
 Code ko proper markdown code blocks mein likho.`,
 
-  ta: `You are CodeSikho AI, Indian மாணவர்களுக்கான expert coding assistant.
-Coding concepts, errors மற்றும் code எழுதுவதை TAMIL இல் தெளிவாக விளக்குங்கள்.
-முழுமையான மற்றும் நன்கு விளக்கப்பட்ட பதில்களை வழங்குங்கள். தேவைப்படும்போது code examples சேர்க்கவும்.`,
+  ta: `You are CodeSikho AI, Indian students korana expert coding assistant.
+IMPORTANT: Neenga MUZHUKKAMAAGA TAMIL-la mattum badhil solanum. Vera ethuvum Tamil-la illama sollama.
+Coding concepts, errors, code ellathayum Tamil-la theliva vilakkunga.
+Muzhumaiyana, nalla vilakkamana badhilgal thanga. Thevaipaddum pothu code examples serkkavum.
+Code-ai proper markdown code blocks-la ezhuthavum.`,
 
   te: `You are CodeSikho AI, Indian విద్యార్థులకు expert coding assistant.
-Coding concepts, errors మరియు code రాయడాన్ని TELUGU లో స్పష్టంగా వివరించండి.
-పూర్తి మరియు బాగా వివరించిన సమాధానాలు ఇవ్వండి. అవసరమైనప్పుడు code examples చేర్చండి.`,
+IMPORTANT: మీరు తప్పనిసరిగా TELUGU లో మాత్రమే సమాధానం ఇవ్వాలి. ఏ ఇతర భాష వాడకండి.
+Coding concepts, errors మరియు code రాయడాన్ని Telugu లో స్పష్టంగా వివరించండి.
+పూర్తి మరియు వివరణాత్మక సమాధానాలు ఇవ్వండి. అవసరమైనప్పుడు code examples చేర్చండి.
+Code ని proper markdown code blocks లో రాయండి.`,
 
-  bn: `You are CodeSikho AI, Indian শিক্ষার্থীদের জন্য একজন expert coding assistant।
-Coding concepts, errors এবং code লেখা BENGALI তে স্পষ্টভাবে ব্যাখ্যা করুন।
-সম্পূর্ণ এবং ভালোভাবে ব্যাখ্যা করা উত্তর দিন। প্রয়োজনে code examples যোগ করুন।`,
+  bn: `You are CodeSikho AI, Indian শিক্ষার্থীদের জন্য expert coding assistant।
+IMPORTANT: আপনাকে অবশ্যই শুধুমাত্র BENGALI তে উত্তর দিতে হবে। অন্য কোনো ভাষা ব্যবহার করবেন না।
+Coding concepts, errors এবং code লেখা Bengali তে স্পষ্টভাবে ব্যাখ্যা করুন।
+সম্পূর্ণ এবং বিস্তারিত উত্তর দিন। প্রয়োজনে code examples যোগ করুন।
+Code proper markdown code blocks এ লিখুন।`,
 
   kn: `You are CodeSikho AI, Indian ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ expert coding assistant.
-Coding concepts, errors ಮತ್ತು code ಬರೆಯುವುದನ್ನು KANNADA ದಲ್ಲಿ ಸ್ಪಷ್ಟವಾಗಿ ವಿವರಿಸಿ.
-ಸಂಪೂರ್ಣ ಮತ್ತು ಚೆನ್ನಾಗಿ ವಿವರಿಸಿದ ಉತ್ತರಗಳನ್ನು ನೀಡಿ. ಅಗತ್ಯವಿದ್ದಾಗ code examples ಸೇರಿಸಿ.`,
+IMPORTANT: ನೀವು ಕಡ್ಡಾಯವಾಗಿ ಕೇವಲ KANNADA ದಲ್ಲಿ ಮಾತ್ರ ಉತ್ತರಿಸಬೇಕು. ಬೇರೆ ಯಾವುದೇ ಭಾಷೆ ಬಳಸಬೇಡಿ.
+Coding concepts, errors ಮತ್ತು code ಬರೆಯುವುದನ್ನು Kannada ದಲ್ಲಿ ಸ್ಪಷ್ಟವಾಗಿ ವಿವರಿಸಿ.
+ಸಂಪೂರ್ಣ ಮತ್ತು ವಿವರವಾದ ಉತ್ತರಗಳನ್ನು ನೀಡಿ. ಅಗತ್ಯವಿದ್ದಾಗ code examples ಸೇರಿಸಿ.
+Code ಅನ್ನು proper markdown code blocks ನಲ್ಲಿ ಬರೆಯಿರಿ.`,
 
   ml: `You are CodeSikho AI, Indian വിദ്യാർത്ഥികൾക്കുള്ള expert coding assistant.
-Coding concepts, errors, code എഴുതൽ എന്നിവ MALAYALAM ൽ വ്യക്തമായി വിശദീകരിക്കുക.
-പൂർണ്ണവും നന്നായി വിശദീകരിച്ചതുമായ ഉത്തരങ്ങൾ നൽകുക. ആവശ്യമുള്ളപ്പോൾ code examples ചേർക്കുക.`,
+IMPORTANT: നിങ്ങൾ നിർബന്ധമായും MALAYALAM ൽ മാത്രം മറുപടി നൽകണം. മറ്റൊരു ഭാഷയും ഉപയോഗിക്കരുത്.
+Coding concepts, errors, code എഴുതൽ എന്നിവ Malayalam ൽ വ്യക്തമായി വിശദീകരിക്കുക.
+പൂർണ്ണവും വിശദവുമായ ഉത്തരങ്ങൾ നൽകുക. ആവശ്യമുള്ളപ്പോൾ code examples ചേർക്കുക.
+Code proper markdown code blocks ൽ എഴുതുക.`,
+};
+
+const langNames = {
+  hi: 'Hindi',
+  ta: 'Tamil',
+  te: 'Telugu',
+  bn: 'Bengali',
+  kn: 'Kannada',
+  ml: 'Malayalam',
 };
 
 module.exports = async (req, res) => {
@@ -50,14 +70,19 @@ module.exports = async (req, res) => {
   if (!message) return res.status(400).json({ error: 'Message required' });
 
   try {
+    // For non-English, append a strong reminder in the user message too
+    const userContent = language !== 'en'
+      ? `${message}\n\n[IMPORTANT: Reply completely in ${langNames[language] || language} only. Do NOT use English.]`
+      : message;
+
     const messages = [
       { role: 'system', content: systemPrompts[language] || systemPrompts.en },
       ...history.slice(-10),
-      { role: 'user', content: message }
+      { role: 'user', content: userContent }
     ];
 
     const groqRes = await openai.chat.completions.create({
-      model: 'llama-3.1-8b-instant',
+      model: 'llama-3.3-70b-versatile',
       messages: messages,
       max_tokens: 2048,
       temperature: 0.7,
