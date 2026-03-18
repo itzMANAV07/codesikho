@@ -1,7 +1,6 @@
 # Getting Started with Create React App
 
-Live DEMO: https://codesikho-zppi-469wlh1fh-itzmanav07-3409s-projects.vercel.app/
-
+Live DEMO: https://codesikho-zppi.vercel.app/
 ## Available Scripts
 
 In the project directory, you can run:
