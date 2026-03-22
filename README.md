@@ -14,21 +14,41 @@
 
 ---
 
-## 🇮🇳 About CodeSikho
+# CodeSikho 🇮🇳
 
-**CodeSikho** (कोड सीखो) means *"Learn to Code"* in Hindi. It is a multilingual AI coding assistant built specifically for Indian students who struggle to understand programming concepts in English.
+An AI-powered multilingual coding assistant that helps you learn 
+programming in Hindi and regional Indian languages.
 
-Whether you're a student in a village in Bihar or a college student in Chennai, CodeSikho explains coding errors, concepts, and solutions in **your own language** — making programming education truly accessible across Bharat.
+Built for the **AI for Bharat Hackathon 2026**.
 
----
+## What it does
 
-## ✨ Features
+- 💬 Answers coding doubts in Hindi and regional languages
+- 📖 Explains programming concepts in simple, native language
+- 🎓 Teaches programming step by step like a personal tutor
 
-- 🗣️ **7 Indian Languages** — English, हिंदी, தமிழ், తెలుగు, বাংলা, ಕನ್ನಡ, മലയാളം
-- 🎙️ **Voice Input** — Speak your coding question in your language using the mic
-- 💬 **Multi-turn Conversations** — Full chat history with context memory
-- 🌙 **Dark / Light Mode** — Easy on the eyes during late-night coding sessions
-- 📋 **Code Highlighting** — Syntax-highlighted code blocks with one-click copy
+## Why it exists
+
+Most coding resources are in English. CodeSikho removes that barrier 
+— so anyone in India can learn to code in the language they think in.
+
+## Tech Stack
+
+- React
+- CSS
+- Groq API (AI backbone)
+- Deployed on Vercel
+
+## Live Demo
+
+🔗 [codesikho-eight.vercel.app](https://codesikho-eight.vercel.app)
+
+## Run Locally
+
+git clone https://github.com/itzMANAV07/codesikho
+cd codesikho
+npm install
+npm start
 - 📱 **Responsive Design** — Works on mobile, tablet, and desktop
 - ⚡ **Quick Questions** — Pre-built starter questions in every language
 - 🕐 **Chat History** — Save, revisit, and delete past conversations
