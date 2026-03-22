@@ -5,7 +5,7 @@
 ![CodeSikho Banner](https://img.shields.io/badge/CodeSikho-AI%20Coding%20Assistant-4ade80?style=for-the-badge&logo=react)
 ![Made for India](https://img.shields.io/badge/Made%20for-Bharat%20🇮🇳-FF9933?style=for-the-badge)
 ![Hackathon](https://img.shields.io/badge/AI%20for%20Bharat-Hackathon%202026-3b82f6?style=for-the-badge)
-
+<>
 #
 An AI-powered multilingual coding assistant that helps you learn 
 programming in Hindi and regional Indian languages.
